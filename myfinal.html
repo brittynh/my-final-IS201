@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nanny Portfolio</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background-color: #fff5f8;
+      color: #444;
+      margin: 0;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      background-color: #ffe6ec;
+      padding: 30px 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      color: #d65a84;
+      font-size: 2.5em;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #a05a6c;
+    }
+
+    .nanny-profile {
+      background-color: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(200, 100, 120, 0.1);
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      color: #d65a84;
+      font-size: 1.8em;
+    }
+
+    h3 {
+      color: #a05a6c;
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    ul {
+      padding-left: 20px;
+      margin-top: 5px;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+    .nanny-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+.nanny-text {
+  flex: 1;
+}
+
+.nanny-photo-rect {
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(200, 100, 120, 0.15);
+}
+
+  </style>
+</head>
+<body>
+<body id="top">
+
+  <header>
+    <h1>Brittyn's Nanny Services</h1>
+    <p>Hate the hassle of last minute plans and needing a nanny? Let Brittyn find one for you!</p>
+    <p>Located in Provo, Orem, Springville area.</p>
+  </header>
+  <nav style="text-align:center; margin-top:20px;">
+  <a href="scratch.html" style="color:#d65a84; font-weight:bold; text-decoration:none;">
+    Fun Kids' Activities
+  </a>
+</nav>
+
+  <!-- ===== Activities Finder (hidden until clicked) ===== -->
+<section id="activities-section" style="background:#ffffff;border-radius:12px;box-shadow:0 4px 12px rgba(200,100,120,0.12);padding:20px;margin:24px 0;">
+  <h2 style="margin:0 0 8px;color:#d65a84;font-family:Arial,Helvetica,sans-serif;">
+    Find Local Kids’ Activities
+  </h2>
+  <p style="color:#444;font-family:Arial,Helvetica,sans-serif;line-height:1.5;margin:0 0 12px;">
+    Click below to enter your city and your child’s age for a fun nanny-approved activity nearby.
+  </p>
+
+  <!-- Button opens the hidden panel -->
+  <button id="openActivitiesBtn"
+          style="display:inline-block;background:#d65a84;color:#fff;border:none;padding:10px 14px;border-radius:8px;font-family:Arial,Helvetica,sans-serif;cursor:pointer;">
+    Open Activities Finder
+  </button>
+
+  <!-- Hidden finder panel -->
+  <section id="activities" style="display:none;margin-top:30px;background:#fff;border-radius:12px;padding:20px;border:1px solid #ffe0ea;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <h3 style="margin:0 0 8px;color:#a05a6c;">Nanny Activities Finder</h3>
+      <a id="closeActivitiesBtn" href="#activities-section"
+         style="color:#d65a84;text-decoration:underline;">Close ✕</a>
+    </div>
+
+    <div style="display:grid;gap:10px;max-width:520px;">
+      <label for="city" style="font-weight:bold;">City</label>
+      <input id="city" type="text" placeholder="e.g., Provo, Salt Lake City"
+             style="border:1px solid #ffd6e3;border-radius:8px;padding:10px 12px;background:#fffafd;font:inherit;">
+
+      <label for="age" style="font-weight:bold;">Child’s Age (years)</label>
+      <input id="age" type="number" min="0" max="12" placeholder="e.g., 3"
+             style="border:1px solid #ffd6e3;border-radius:8px;padding:10px 12px;background:#fffafd;font:inherit;">
+
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button id="goBtn"
+                style="background:#d65a84;color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;">
+          Get Activity
+        </button>
+        <button id="anotherBtn"
+                style="background:#a05a6c;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;display:none;">
+          Another idea
+        </button>
+      </div>
+    </div>
+
+    <div id="result" style="margin-top:18px;padding:14px;border:1px solid #ffe0ea;border-radius:10px;display:none;">
+      <h4 style="margin:0 0 8px;color:#a05a6c;">Suggested Activity</h4>
+      <p id="idea" style="margin:0;line-height:1.6;"></p>
+    </div>
+
+    <p style="margin-top:14px;font-size:0.9rem;color:#7a6b72;">
+      Tip: If your city isn’t recognized, we’ll use general ideas that work in most places.
+    </p>
+  </section>
+
+  <script>
+    // show/hide behavior
+    const drawer = document.getElementById('activities');
+    document.getElementById('openActivitiesBtn').addEventListener('click', () => {
+      drawer.style.display = 'block';
+      drawer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('city').focus();
+    });
+    document.getElementById('closeActivitiesBtn').addEventListener('click', (e) => {
+      // keep anchor for “jump back” feel, but hide the panel
+      drawer.style.display = 'none';
+    });
+
+    // activity generator logic
+    const ideas = {
+      "salt lake city": {
+        b02: ["👶 Liberty Park stroller walk + tummy time","🎶 Baby storytime at Main Library"],
+        a35: ["📚 Library preschool hour + Liberty Park playground","🖍️ Discovery Gateway toddler area"],
+        a68: ["🧪 Discovery Gateway exhibits","🚲 Jordan River Parkway ride"],
+        a912:["🧗 Kids’ bouldering intro","🎭 Youth theatre workshop"]
+      },
+      "provo": {
+        b02: ["👶 Pioneer Park stroller lap","🎶 Baby music time at Provo Library"],
+        a35: ["🎠 Provo Beach carousel","🖍️ Library craft corner"],
+        a68: ["🦖 BYU Dino Museum","🛝 Rock Canyon Park playground"],
+        a912:["🚵 Riverside Trail ride","🎳 Bowling with bumpers"]
+      },
+      "default": {
+        b02: ["👶 Park stroller walk + songs","🎶 Library baby lap-sit"],
+        a35: ["🖍️ Storytime + playground","🧩 Sensory bin picnic"],
+        a68: ["🧪 Science center visit","🗺️ Nature scavenger hunt"],
+        a912:["🚲 Greenway ride + snack","🎨 Sidewalk chalk mural"]
+      }
+    };
+
+    function bucket(age){
+      const n = Number(age);
+      if (isNaN(n) || n < 0) return "a35";
+      if (n <= 2) return "b02";
+      if (n <= 5) return "a35";
+      if (n <= 8) return "a68";
+      return "a912";
+    }
+    const city = document.getElementById('city');
+    const age  = document.getElementById('age');
+    const go   = document.getElementById('goBtn');
+    const another = document.getElementById('anotherBtn');
+    const result  = document.getElementById('result');
+    const ideaEl  = document.getElementById('idea');
+
+    let lastPool = [];
+    function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+    function generate(){
+      const key = (city.value || "").trim().toLowerCase();
+      const group = ideas[key] ? key : "default";
+      const b = bucket(age.value);
+      lastPool = (ideas[group] && ideas[group][b]) ? ideas[group][b] : ideas["default"][b];
+      ideaEl.textContent = pick(lastPool);
+      result.style.display = 'block';
+      another.style.display = 'inline-block';
+    }
+    go.addEventListener('click', generate);
+    another.addEventListener('click', () => lastPool.length && (ideaEl.textContent = pick(lastPool)));
+    [city, age].forEach(el => el.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); generate(); } }));
+  </script>
+</section>
+<!-- ===== /Activities Finder ===== -->
+
+
+</section>
+
+  <!-- Nanny Profile 1 -->
+  <section class="nanny-profile">
+    <div class="nanny-content">
+      <div class="nanny-text">
+        <h2>Brittyn Heaton</h2>
+        <p><strong>Location:</strong> Provo, UT</p>
+        <p><strong>Email:</strong> brittynheaton@gmail.com | <strong>Phone:</strong> (435) 559-8273</p>
+
+    <h3>About Me</h3>
+    <p>Energetic and nurturing nanny with a love for early childhood education. Over 4 years of experience working with toddlers and preschoolers in home and daycare settings.</p>
+
+    <h3>Experience</h3>
+    <ul>
+      <li>Full-time nanny for the Martinez family – 2 years</li>
+      <li>Teacher assistant at Tiny Tots Preschool – 2 years</li>
+    </ul>
+
+    <h3>Education</h3>
+    <p>Studying at BYU in Strategic Management in the Marriott Business School</p>
+
+    <h3>Certifications</h3>
+    <ul>
+      <li>Child Development Associate (CDA)</li>
+      <li>CPR Certified</li>
+    </ul>
+
+    <h3>Skills</h3>
+    <ul>
+      <li>Interactive storytelling</li>
+      <li>Daily learning activities</li>
+      <li>Creative art projects</li>
+      <li>Outdoor play supervision</li>
+    </ul>
+     </div>
+
+    <img src="images/brittyn.JPG" alt="Photo of Brittyn Heaton" class="nanny-photo-rect" />
+  </div>
+  </section>
+
+</body>
+
+
+  <!-- Nanny Profile 2 -->
+   <section class="nanny-profile">
+  <div class="nanny-content">
+ <div class="nanny-text">
+    <h2>Peyton Armstrong</h2>
+    <p><strong>Location:</strong> Springville, UT</p>
+    <p><strong>Email:</strong> peyton.armstrong@gmail.com | <strong>Phone:</strong> (801) 555-1234</p>
+
+    <h3>About Me</h3>
+    <p>Passionate, reliable nanny with over 5 years of experience caring for children ages 6 months to 10 years. Creative, organized, and CPR-certified.</p>
+
+    <h3>Experience</h3>
+    <ul>
+      <li>Live-in nanny for the Johnson family – 3 years</li>
+      <li>Part-time nanny for the Smith family – 2 years</li>
+      <li>Volunteered at Little Learners Daycare – 1 year</li>
+    </ul>
+
+    <h3>Education</h3>
+    <p>Associates in Early Childhood Development – Salt Lake Community College</p>
+
+    <h3>Certifications</h3>
+    <ul>
+      <li>CPR & First Aid Certified</li>
+      <li>Infant and Toddler Nutrition Certificate</li>
+    </ul>
+
+    <h3>Skills</h3>
+    <ul>
+      <li>Potty training</li>
+      <li>Meal prep and nutrition</li>
+      <li>Activity planning and crafts</li>
+      <li>Sleep schedule support</li>
+    </ul>
+     </div>
+
+    <img src="images/Peyton.jpeg" alt="Photo of Peyton Armstrong" class="nanny-photo-rect" />
+  </div>
+  </section>
+
+  <!-- Nanny Profile 3 -->
+ <section class="nanny-profile">
+  <div class="nanny-content">
+ <div class="nanny-text">
+    <h2>Jentry Saul</h2>
+    <p><strong>Location:</strong> Orem, UT</p>
+    <p><strong>Email:</strong> jentry.saul@gmail.com | <strong>Phone:</strong> (385) 555-9876</p>
+
+    <h3>About Me</h3>
+    <p>Energetic and nurturing nanny with a love for early childhood education. Over 4 years of experience working with toddlers and preschoolers in home and daycare settings.</p>
+
+    <h3>Experience</h3>
+    <ul>
+      <li>Full-time nanny for the Martinez family – 2 years</li>
+      <li>Teacher assistant at Tiny Tots Preschool – 2 years</li>
+    </ul>
+
+    <h3>Education</h3>
+    <p>Bachelor's in Family Studies – Utah Valley University</p>
+
+    <h3>Certifications</h3>
+    <ul>
+      <li>Child Development Associate (CDA)</li>
+      <li>CPR Certified</li>
+    </ul>
+
+    <h3>Skills</h3>
+    <ul>
+      <li>Interactive storytelling</li>
+      <li>Daily learning activities</li>
+      <li>Creative art projects</li>
+      <li>Outdoor play supervision</li>
+    </ul>
+    </div>
+
+    <img src="images/jentry.jpeg" alt="Photo of Jentry Saul" class="nanny-photo-rect" />
+  </div>
+  </section>
+
+ <!-- Nanny Profile 4 -->
+<section class="nanny-profile">
+  <div class="nanny-content">
+    <div class="nanny-text">
+      <h2>Becca Anderson</h2>
+      <p><strong>Location:</strong> Provo, UT</p>
+      <p><strong>Email:</strong> becca.anderson@gmail.com | <strong>Phone:</strong> (801) 555-5678</p>
+
+      <h3>About Me</h3>
+      <p>Passionate, reliable nanny with over 5 years of experience caring for children ages 6 months to 10 years. Creative, organized, and CPR-certified.</p>
+
+      <h3>Experience</h3>
+      <ul>
+        <li>Live-in nanny for the Johnson family – 3 years</li>
+        <li>Part-time nanny for the Smith family – 2 years</li>
+        <li>Volunteered at Little Learners Daycare – 1 year</li>
+      </ul>
+
+      <h3>Education</h3>
+      <p>Associates in Early Childhood Development – Salt Lake Community College</p>
+
+      <h3>Certifications</h3>
+      <ul>
+        <li>CPR & First Aid Certified</li>
+        <li>Infant and Toddler Nutrition Certificate</li>
+      </ul>
+
+      <h3>Skills</h3>
+      <ul>
+        <li>Potty training</li>
+        <li>Meal prep and nutrition</li>
+        <li>Activity planning and crafts</li>
+        <li>Sleep schedule support</li>
+      </ul>
+    </div>
+
+    <img src="images/becca.jpeg" alt="Photo of Becca Anderson" class="nanny-photo-rect" />
+  </div>
+</section>
+
+
